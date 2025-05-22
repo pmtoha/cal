@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Essential for responsive design on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grafix Scientific Calculator</title>
   <style>
     /* Global Style */
@@ -9,7 +11,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       background: linear-gradient(45deg, #1e3c72, #2a5298);
       font-family: 'Arial', sans-serif;
@@ -21,12 +23,14 @@
       border-radius: 15px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
       padding: 20px;
-      width: 320px;
+      width: 90%;
+      max-width: 320px;
+      margin: 20px;
     }
     
     /* Display Screen */
     #display {
-      width: calc(100% - 20px);
+      width: 100%;
       margin: 0 auto 20px;
       padding: 10px;
       font-size: 1.5em;
@@ -79,6 +83,29 @@
       font-size: 0.8em;
       color: #555;
     }
+    
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 480px) {
+      #calculator {
+        padding: 15px;
+        width: 95%;
+        max-width: none;
+      }
+      
+      #display {
+        font-size: 1.3em;
+        padding: 8px;
+      }
+      
+      .calc-button {
+        padding: 12px;
+        font-size: 1em;
+      }
+      
+      .developer-credit {
+        font-size: 0.75em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -112,7 +139,7 @@
       <button class="calc-button" onclick="appendValue('3')">3</button>
       <button class="calc-button" onclick="appendValue('+')">+</button>
       
-      <!-- Equals button (spanning full width) -->
+      <!-- Equals button spanning full width -->
       <button class="calc-button wide" onclick="calculate()">=</button>
     </div>
     <p class="developer-credit">Developed by Toha</p>
@@ -122,7 +149,6 @@
     // Append text to the display screen
     function appendValue(val) {
       const display = document.getElementById('display');
-      // Replace the initial zero if present
       if (display.value === "0") {
         display.value = "";
       }
@@ -144,9 +170,8 @@
     function calculate() {
       const display = document.getElementById('display');
       let expression = display.value;
-
-      // Handle exponentiation: convert a^b into Math.pow(a,b)
-      // This simple regex works for numbers only. For more complex expressions, further parsing may be needed.
+      
+      // Handles exponentiation: convert a^b into Math.pow(a,b)
       expression = expression.replace(/(\d+)\^(\d+)/g, "Math.pow($1,$2)");
 
       try {
