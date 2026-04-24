@@ -2,8 +2,6 @@
 
 A sleek, fully responsive calculator web application with dark/light theme, memory functions, and full keyboard support.
 
-![Calculator Screenshot](screenshot.png)
-> *Replace `screenshot.png` with an actual screenshot of your calculator*
 
 ## ✨ Features
 
