@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator.web</title>
+  <style>
+    /* Global Style */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(45deg, #1e3c72, #2a5298);
+      font-family: 'Arial', sans-serif;
+    }
+    
+    /* Calculator Container */
+    #calculator {
+      background: #f9f9f9;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      width: 90%;
+      max-width: 320px;
+      margin: 20px;
+    }
+    
+    /* Display Screen */
+    #display {
+      width: 100%;
+      margin: 0 auto 20px;
+      padding: 10px;
+      font-size: 1.5em;
+      text-align: right;
+      border: none;
+      border-radius: 10px;
+      background: #e8e8e8;
+      outline: none;
+    }
+    
+    /* Button Grid */
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 10px;
+    }
+    
+    /* Calculator Buttons */
+    .calc-button {
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 1.1em;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    /* Animation Effects */
+    .calc-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .calc-button:active {
+      transform: scale(0.95);
+    }
+    
+    /* Wide button style for '=' */
+    .wide {
+      grid-column: span 5;
+      border-radius: 25px;
+    }
+    
+    /* Developer Credit Style */
+    .developer-credit {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.8em;
+      color: #555;
+    }
+    
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 480px) {
+      #calculator {
+        padding: 15px;
+        width: 95%;
+        max-width: none;
+      }
+      
+      #display {
+        font-size: 1.3em;
+        padding: 8px;
+      }
+      
+      .calc-button {
+        padding: 12px;
+        font-size: 1em;
+      }
+      
+      .developer-credit {
+        font-size: 0.75em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="calculator">
+    <input type="text" id="display" readonly placeholder="0">
+    <div class="button-container">
+      <!-- First row: Clear, Delete, (, ), ÷ -->
+      <button class="calc-button" onclick="clearDisplay()">C</button>
+      <button class="calc-button" onclick="deleteChar()">DEL</button>
+      <button class="calc-button" onclick="appendValue('(')">(</button>
+      <button class="calc-button" onclick="appendValue(')')">)</button>
+      <button class="calc-button" onclick="appendValue('/')">÷</button>
+      
+      <!-- Second row: 7, 8, 9, ×, power -->
+      <button class="calc-button" onclick="appendValue('7')">7</button>
+      <button class="calc-button" onclick="appendValue('8')">8</button>
+      <button class="calc-button" onclick="appendValue('9')">9</button>
+      <button class="calc-button" onclick="appendValue('*')">×</button>
+      <!-- Using ^ for exponentiation (later replaced with Math.pow) -->
+      <button class="calc-button" onclick="appendValue('^')">^</button>
+      
+      <!-- Third row: 4, 5, 6, -, -->
+      <button class="calc-button" onclick="appendValue('4')">4</button>
+      <button class="calc-button" onclick="appendValue('5')">5</button>
+      <button class="calc-button" onclick="appendValue('6')">6</button>
+      <button class="calc-button" onclick="appendValue('-')">−</button>
+
+
+   <button class="calc-button" onclick="appendValue('+')">+</button>
+
+      
+      <!-- Fourth row: 1, 2, 3, +, -->
+      
+
+  
+
+
+<button class="calc-button" onclick="appendValue('1')">1</button>
+
+
+      <button class="calc-button" onclick="appendValue('2')">2</button>
+      <button class="calc-button" onclick="appendValue('3')">3</button>
+
+
+    <button class="calc-button" onclick="appendValue('0')">0</button>
+          <button class="calc-button" onclick="appendValue('.')">.</button>
+
+     
+      
+      <!-- Equals button spanning full width -->
+      <button class="calc-button wide" onclick="calculate()">=</button>
+    </div>
+    <p class="developer-credit">Developed by Toha</p>
+  </div>
+
+  <script>
+    // Append text to the display screen
+    function appendValue(val) {
+      const display = document.getElementById('display');
+      if (display.value === "0") {
+        display.value = "";
+      }
+      display.value += val;
+    }
+
+    // Clear the entire display
+    function clearDisplay() {
+      document.getElementById('display').value = "";
+    }
+
+    // Delete the last character
+    function deleteChar() {
+      const display = document.getElementById('display');
+      display.value = display.value.slice(0, -1);
+    }
+
+    // Evaluate the expression entered by the user
+    function calculate() {
+      const display = document.getElementById('display');
+      let expression = display.value;
+
+
+      
+      // Handles exponentiation: convert a^b into Math.pow(a,b)
+      expression = expression.replace(/(\d+)\^(\d+)/g, "Math.pow($1,$2)");
+
+      try {
+        let result = eval(expression);
+        display.value = result;
+      } catch (e) {
+        display.value = "Error";
+      }
+    }
+  </script>
+</body>
+</html>
